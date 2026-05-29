@@ -6,7 +6,14 @@ import type { ResumeData } from "../types/resume";
 
 export const defaultResume: ResumeData = {
   contactInfo: {name:"", address:"", cityState:"", email:"", phone:"", zipCode: ""},
-  education: [],
+  education: [
+  {
+    school: "",
+    degree: "",
+    location: "",
+    dateRange: ""
+  }
+],
   experience: [],
   leadership: [],
   skills: []

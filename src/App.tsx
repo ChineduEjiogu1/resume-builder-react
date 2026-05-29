@@ -3,11 +3,13 @@
 
 import { ContactInfoForm } from "./components/editor/ContactInfoForm";
 import { Preview } from "./components/preview/Preview";
+import { EducationForm } from "./components/editor/EducationForm";
 
 export default function App() {
   return (
     <main>
       <ContactInfoForm />
+      <EducationForm />
       <Preview />
     </main>
   );

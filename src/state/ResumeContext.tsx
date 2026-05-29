@@ -2,7 +2,7 @@
 // Export a ResumeProvider plus useResume() / useResumeDispatch() hooks.
 
 import type { ResumeData } from "../types/resume";
-import type { ContactAction } from "../types/actions";
+import type { ResumeAction } from "../types/actions";
 import {
   createContext,
   useContext,
@@ -19,7 +19,7 @@ type ResumeProviderProps = {
 
 type ResumeContextValue = {
   resume: ResumeData;
-  dispatch: Dispatch<ContactAction>; 
+  dispatch: Dispatch<ResumeAction>; 
 };
 
 const ResumeContext = createContext<ResumeContextValue | null>(null);

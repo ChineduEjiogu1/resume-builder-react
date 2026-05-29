@@ -13,20 +13,57 @@
 //   | { type: "RESET_RESUME" };
 
 import type { ResumeData } from "../types/resume";
-import type { ContactAction } from "../types/actions";
+import type { ResumeAction } from "../types/actions";
 
-export function resumeReducer (
-    state: ResumeData,
-    action: ContactAction
-): ResumeData{
-    switch (action.type) {
-        case "update_contact_info":
-            return {
-                ...state,
-                contactInfo: {
-                    ...state.contactInfo,
-                    [action.field] : action.value
-                }
-            };
-    };
+export function resumeReducer(
+  state: ResumeData,
+  action: ResumeAction,
+): ResumeData {
+  switch (action.type) {
+    case "update_contact_info":
+      return {
+        ...state,
+        contactInfo: {
+          ...state.contactInfo,
+          [action.field]: action.value,
+        },
+      };
+
+    case "update_education":
+      return {
+        ...state,
+        education: state.education.map((entry, index) =>
+          index === action.index
+            ? { ...entry, [action.field]: action.value }
+            : entry,
+        ),
+      };
+
+    case "add_education": {
+      const blankEducationEntry = {
+        school: "",
+        degree: "",
+        location: "",
+        dateRange: "",
+      };
+
+      return {
+        ...state,
+        education: [...state.education, blankEducationEntry],
+      };
+    }
+
+    case "delete_education":
+      if (state.education.length <= 1) {
+        return state;
+      }
+
+      return {
+        ...state,
+        education: state.education.filter((_, index) => index !== action.index),
+      };
+
+    default:
+      return state;
+  }
 }
