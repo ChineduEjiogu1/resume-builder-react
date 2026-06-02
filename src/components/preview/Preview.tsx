@@ -1,6 +1,6 @@
 // Preview.tsx — right pane (your render.js). Reads resume from context, renders the document.
 
-import { useResume } from "../../state/ResumeContext";
+import { useResume } from "../../state/useResume";
 
 export function Preview() {
   const { resume } = useResume();

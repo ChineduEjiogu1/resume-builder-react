@@ -3,9 +3,10 @@
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "../src/App";
-import { ResumeProvider } from "../src/state/ResumeContext"; // Adjust path if your provider is elsewhere
+import App from "../src/App"; // Adjust path if your provider is elsewhere
 import "./index.css"; // Your global CSS file
+
+import { ResumeProvider } from "../src/state/resumeProvider";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
