@@ -14,7 +14,16 @@ export const defaultResume: ResumeData = {
     dateRange: ""
   }
 ],
-  experience: [],
+  experience: [
+  {
+    organization: "",
+    role: "",
+    location: "",
+    dateRange: "",
+    bullets: []
+  }
+],
+
   leadership: [],
   skills: []
 };

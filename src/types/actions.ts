@@ -25,8 +25,34 @@ export type DeleteEducationAction = {
   index: number;
 };
 
+export type UpdateExperience = {
+  type: "update_experience";
+  index: number;
+  field: ExperienceFieldName;
+  value: string;
+};
+
+export type AddExperienceAction = {
+  type: "add_experience";
+};
+
+export type DeleteExperienceAction = {
+  type: "delete_experience";
+  index: number;
+};
+
+export type ExperienceFieldName =
+  | "organization"
+  | "role"
+  | "location"
+  | "dateRange";
+
+
 export type ResumeAction =
   | ContactAction
   | UpdateEducation
   | AddEducationAction
-  | DeleteEducationAction;
+  | DeleteEducationAction
+  | UpdateExperience
+  | AddExperienceAction
+  | DeleteExperienceAction;

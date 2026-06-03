@@ -63,6 +63,43 @@ export function resumeReducer(
         education: state.education.filter((_, index) => index !== action.index),
       };
 
+    case "update_experience":
+      return {
+        ...state,
+        experience: state.experience.map((entry, index) =>
+          index === action.index
+            ? { ...entry, [action.field]: action.value }
+            : entry,
+        ),
+      };
+
+    case "add_experience": {
+      const blankExperienceEntry = {
+        organization: "",
+        role: "",
+        location: "",
+        dateRange: "",
+        bullets: [],
+      };
+
+      return {
+        ...state,
+        experience: [...state.experience, blankExperienceEntry],
+      };
+    }
+
+    case "delete_experience":
+      if (state.experience.length <= 1) {
+        return state;
+      }
+
+      return {
+        ...state,
+        experience: state.experience.filter(
+          (_, index) => index !== action.index,
+        ),
+      };
+
     default:
       return state;
   }
