@@ -3,7 +3,7 @@
 import { useResume } from "../../state/useResume";
 import { ResumeHeader } from "./ResumeHeader";
 import { EducationPreviewSection } from "./EducationPreviewSection";
-import { ExperiencePreviewSection } from "./ExperiencePreviewSection"; 
+import { BulletedPreviewSection } from "./BulletedPreviewSection";
 
 export function Preview() {
   const { resume } = useResume();
@@ -12,7 +12,7 @@ export function Preview() {
     <>
       <ResumeHeader contactInfo={resume.contactInfo} />
       <EducationPreviewSection education={resume.education} />
-      <ExperiencePreviewSection experience={resume.experience} />
+      <BulletedPreviewSection title="Experience" entries={resume.experience} />
     </>
   );
 }

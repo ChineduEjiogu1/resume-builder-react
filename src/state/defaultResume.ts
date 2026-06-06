@@ -20,7 +20,7 @@ export const defaultResume: ResumeData = {
     role: "",
     location: "",
     dateRange: "",
-    bullets: []
+    bullets: [""]
   }
 ],
 

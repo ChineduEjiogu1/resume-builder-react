@@ -41,6 +41,24 @@ export type DeleteExperienceAction = {
   index: number;
 };
 
+export type UpdateExperienceBulletAction = {
+  type: "update_experience_bullet";
+  entryIndex: number;
+  bulletIndex: number;
+  value: string;
+};
+
+export type AddExperienceBulletAction = {
+  type: "add_experience_bullet";
+  entryIndex: number;
+};
+
+export type DeleteExperienceBulletAction = {
+  type: "delete_experience_bullet";
+  entryIndex: number;
+  bulletIndex: number;
+};
+
 export type ExperienceFieldName =
   | "organization"
   | "role"
@@ -55,4 +73,7 @@ export type ResumeAction =
   | DeleteEducationAction
   | UpdateExperience
   | AddExperienceAction
-  | DeleteExperienceAction;
+  | DeleteExperienceAction
+  | UpdateExperienceBulletAction
+  | AddExperienceBulletAction
+  | DeleteExperienceBulletAction;

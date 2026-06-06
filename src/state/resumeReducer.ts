@@ -100,7 +100,56 @@ export function resumeReducer(
         ),
       };
 
+
+    case "update_experience_bullet":
+      return {
+        ...state,
+         experience : state.experience.map((entry,entryIndex) => 
+          entryIndex === action.entryIndex ? {
+            ...entry,
+            bullets: entry.bullets.map((bullet, bulletsIndex) => 
+              bulletsIndex == action.bulletIndex ? action.value : bullet
+            ),
+          }
+          : entry
+        ),
+      };
+
+    case "add_experience_bullet":
+      return {
+        ...state,
+        experience: state.experience.map((entry, entryIndex) =>
+          entryIndex === action.entryIndex ? {
+            ...entry,
+            bullets: [...entry.bullets, ""],
+          }
+          : entry
+        ),
+      };
+
+    case "delete_experience_bullet":
+      return {
+        ...state,
+        experience: state.experience.map((entry, entryIndex) => {
+          
+          if (entryIndex !== action.entryIndex) {
+            return entry
+          }
+
+          if (entry.bullets.length <= 1) {
+              return entry;
+          }
+
+          return {
+            ...entry,
+            bullets: entry.bullets.filter(
+              (_, bulletIndex) => bulletIndex !== action.bulletIndex
+            ),
+          };
+      }),
+    };
+
     default:
       return state;
   }
-}
+};

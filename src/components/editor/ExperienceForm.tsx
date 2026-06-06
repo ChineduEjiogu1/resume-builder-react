@@ -1,5 +1,5 @@
 import { useResume } from "../../state/useResume";
-import { EntryEditor } from "./EntryEditor";
+import { BulletedEntryEditor } from "./BulletedEntryEditor";
 
 export function ExperienceForm() {
   const { resume, dispatch } = useResume();
@@ -10,7 +10,7 @@ export function ExperienceForm() {
 
       {resume.experience.map((entry, entryIndex) => (
         <div key={entryIndex}>
-          <EntryEditor
+          <BulletedEntryEditor
             entry={entry}
             onUpdate={(field, value) =>
               dispatch({
@@ -18,6 +18,27 @@ export function ExperienceForm() {
                 index: entryIndex,
                 field,
                 value,
+              })
+            }
+            onUpdateBullet={(bulletIndex, value) =>
+              dispatch({
+                type: "update_experience_bullet",
+                entryIndex,
+                bulletIndex,
+                value,
+              })
+            }
+            onAddBullet={() =>
+              dispatch({
+                type: "add_experience_bullet",
+                entryIndex,
+              })
+            }
+            onDeleteBullet={(bulletIndex) =>
+              dispatch({
+                type: "delete_experience_bullet",
+                entryIndex,
+                bulletIndex,
               })
             }
           />
