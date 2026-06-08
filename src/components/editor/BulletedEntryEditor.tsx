@@ -1,5 +1,8 @@
 // EntryEditor.tsx — edits one entry: its TextFields, its BulletEditor, a remove button.
-import type { BulletedEntry } from "../../types/resume";
+import type {
+  BulletedEntry,
+  BulletedEntryFieldName,
+} from "../../types/resume";
 import { TextField } from "../shared/TextField";
 import { BulletEditor } from "./BulletEditor";
 
@@ -8,8 +11,6 @@ type EntryField = {
   field: BulletedEntryFieldName;
   placeholder: string;
 };
-
-export type BulletedEntryFieldName = "organization" | "role" | "location" | "dateRange";
 
 const entryFields: EntryField[] = [
   {

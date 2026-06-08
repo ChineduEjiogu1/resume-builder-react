@@ -41,5 +41,18 @@ export interface ResumeData {
 }
 
 // Handy unions for the reducer (which section is being acted on)
+export interface BulletedEntry {
+  organization: string;
+  role: string;
+  location: string;
+  dateRange: string;
+  bullets: string[];
+}
+
+export type BulletedEntryFieldName =
+  | "organization"
+  | "role"
+  | "location"
+  | "dateRange";
 export type EntrySection = "education" | "experience" | "leadership" | "skills";
 export type BulletedSection = "experience" | "leadership"; // only these have bullets

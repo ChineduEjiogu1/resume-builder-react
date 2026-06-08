@@ -13,6 +13,7 @@ export function Preview() {
       <ResumeHeader contactInfo={resume.contactInfo} />
       <EducationPreviewSection education={resume.education} />
       <BulletedPreviewSection title="Experience" entries={resume.experience} />
+      <BulletedPreviewSection title="Leadership" entries={resume.leadership} />
     </>
   );
 }

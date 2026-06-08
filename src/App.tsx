@@ -5,6 +5,7 @@ import { ContactInfoForm } from "./components/editor/ContactInfoForm";
 import { Preview } from "./components/preview/Preview";
 import { EducationForm } from "./components/editor/EducationForm";
 import { ExperienceForm } from "./components/editor/ExperienceForm";
+import { LeadershipForm } from "./components/editor/LeadershipForm";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <ContactInfoForm />
       <EducationForm />
       <ExperienceForm />
+      <LeadershipForm />
       <Preview />
     </main>
   );

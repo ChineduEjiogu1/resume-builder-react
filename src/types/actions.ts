@@ -1,5 +1,8 @@
-import type { ContactInfo } from "./resume";
-import type { EducationEntry } from "./resume";
+import type {
+  ContactInfo,
+  EducationEntry,
+  BulletedEntryFieldName,
+} from "./resume";
 
 export type ContactAction = {
   [K in keyof ContactInfo]: {
@@ -59,6 +62,40 @@ export type DeleteExperienceBulletAction = {
   bulletIndex: number;
 };
 
+export type UpdateLeadership = {
+  type: "update_leadership";
+  index: number;
+  field: BulletedEntryFieldName;
+  value: string;
+};
+
+export type AddLeadershipAction = {
+  type: "add_leadership";
+};
+
+export type DeleteLeadershipAction = {
+  type: "delete_leadership";
+  index: number;
+};
+
+export type UpdateLeadershipBulletAction = {
+  type: "update_leadership_bullet";
+  entryIndex: number;
+  bulletIndex: number;
+  value: string;
+};
+
+export type AddLeadershipBulletAction = {
+  type: "add_leadership_bullet";
+  entryIndex: number;
+};
+
+export type DeleteLeadershipBulletAction = {
+  type: "delete_leadership_bullet";
+  entryIndex: number;
+  bulletIndex: number;
+};
+
 export type ExperienceFieldName =
   | "organization"
   | "role"
@@ -76,4 +113,10 @@ export type ResumeAction =
   | DeleteExperienceAction
   | UpdateExperienceBulletAction
   | AddExperienceBulletAction
-  | DeleteExperienceBulletAction;
+  | DeleteExperienceBulletAction
+  | UpdateLeadership
+  | UpdateLeadershipBulletAction
+  | AddLeadershipAction
+  | DeleteLeadershipAction
+  | AddLeadershipBulletAction
+  | DeleteLeadershipBulletAction;

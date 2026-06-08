@@ -1,19 +1,70 @@
-// resumeReducer.ts — pure, typed reducer. The ResumeAction union below IS your handleClick
-// cases. Every update is immutable (spread/map/filter); TS verifies each branch returns a Resume.
-//
-// type ResumeAction =
-//   | { type: "UPDATE_BASIC_FIELD"; field: keyof Basics; value: string }
-//   | { type: "UPDATE_ENTRY_FIELD"; section: EntrySection; index: number; field: string; value: string }
-//   | { type: "UPDATE_BULLET"; section: BulletedSection; entryIndex: number; bulletIndex: number; value: string }
-//   | { type: "ADD_ENTRY"; section: EntrySection }
-//   | { type: "REMOVE_ENTRY"; section: EntrySection; index: number }
-//   | { type: "ADD_BULLET"; section: BulletedSection; entryIndex: number }
-//   | { type: "REMOVE_BULLET"; section: BulletedSection; entryIndex: number; bulletIndex: number }
-//   | { type: "LOAD_RESUME"; resume: Resume }
-//   | { type: "RESET_RESUME" };
-
-import type { ResumeData } from "../types/resume";
 import type { ResumeAction } from "../types/actions";
+import type { ResumeData, BulletedEntry } from "../types/resume";
+
+function createBlankBulletedEntry() {
+  return {
+    organization: "",
+    role: "",
+    location: "",
+    dateRange: "",
+    bullets: [""],
+  };
+}
+
+function addBulletToEntry(
+  entries: BulletedEntry[],
+  entryIndexToUpdate: number,
+) {
+  return entries.map((entry, entryIndex) =>
+    entryIndex === entryIndexToUpdate
+      ? {
+          ...entry,
+          bullets: [...entry.bullets, ""],
+        }
+      : entry,
+  );
+}
+
+function updateBulletInEntry(
+  entries: BulletedEntry[],
+  entryIndexToUpdate: number,
+  bulletIndexToUpdate: number,
+  value: string,
+) {
+  return entries.map((entry, entryIndex) =>
+    entryIndex === entryIndexToUpdate
+      ? {
+          ...entry,
+          bullets: entry.bullets.map((bullet, bulletIndex) =>
+            bulletIndex === bulletIndexToUpdate ? value : bullet,
+          ),
+        }
+      : entry,
+  );
+}
+
+function deleteBulletFromEntry(
+  entries: BulletedEntry[],
+  entryIndexToUpdate: number,
+  bulletIndexToDelete: number,
+) {
+  return entries.map((entry, entryIndex) => {
+    if (entryIndex !== entryIndexToUpdate) {
+      return entry;
+    }
+
+    if (entry.bullets.length <= 1) {
+      return entry;
+    }
+
+    return {
+      ...entry,
+      bullets: entry.bullets.filter(
+        (_, bulletIndex) => bulletIndex !== bulletIndexToDelete,
+      ),
+    };
+  });
+}
 
 export function resumeReducer(
   state: ResumeData,
@@ -74,13 +125,7 @@ export function resumeReducer(
       };
 
     case "add_experience": {
-      const blankExperienceEntry = {
-        organization: "",
-        role: "",
-        location: "",
-        dateRange: "",
-        bullets: [],
-      };
+      const blankExperienceEntry = createBlankBulletedEntry();
 
       return {
         ...state,
@@ -100,56 +145,92 @@ export function resumeReducer(
         ),
       };
 
-
     case "update_experience_bullet":
       return {
         ...state,
-         experience : state.experience.map((entry,entryIndex) => 
-          entryIndex === action.entryIndex ? {
-            ...entry,
-            bullets: entry.bullets.map((bullet, bulletsIndex) => 
-              bulletsIndex == action.bulletIndex ? action.value : bullet
-            ),
-          }
-          : entry
+        experience: updateBulletInEntry(
+          state.experience,
+          action.entryIndex,
+          action.bulletIndex,
+          action.value,
         ),
       };
 
     case "add_experience_bullet":
       return {
         ...state,
-        experience: state.experience.map((entry, entryIndex) =>
-          entryIndex === action.entryIndex ? {
-            ...entry,
-            bullets: [...entry.bullets, ""],
-          }
-          : entry
-        ),
+        experience: addBulletToEntry(state.experience, action.entryIndex),
       };
 
     case "delete_experience_bullet":
       return {
         ...state,
-        experience: state.experience.map((entry, entryIndex) => {
-          
-          if (entryIndex !== action.entryIndex) {
-            return entry
-          }
+        experience: deleteBulletFromEntry(
+          state.experience,
+          action.entryIndex,
+          action.bulletIndex,
+        ),
+      };
 
-          if (entry.bullets.length <= 1) {
-              return entry;
-          }
+    case "update_leadership":
+      return {
+        ...state,
+        leadership: state.leadership.map((entry, index) =>
+          index === action.index
+            ? { ...entry, [action.field]: action.value }
+            : entry,
+        ),
+      };
 
-          return {
-            ...entry,
-            bullets: entry.bullets.filter(
-              (_, bulletIndex) => bulletIndex !== action.bulletIndex
-            ),
-          };
-      }),
-    };
+    case "add_leadership": {
+      const blankLeadershipEntry = createBlankBulletedEntry();
+
+      return {
+        ...state,
+        leadership: [...state.leadership, blankLeadershipEntry],
+      };
+    }
+
+    case "delete_leadership":
+      if (state.leadership.length <= 1) {
+        return state;
+      }
+
+      return {
+        ...state,
+        leadership: state.leadership.filter(
+          (_, index) => index !== action.index,
+        ),
+      };
+
+    case "update_leadership_bullet":
+      return {
+        ...state,
+        leadership: updateBulletInEntry(
+          state.leadership,
+          action.entryIndex,
+          action.bulletIndex,
+          action.value,
+        ),
+      };
+
+    case "add_leadership_bullet":
+      return {
+        ...state,
+        leadership: addBulletToEntry(state.leadership, action.entryIndex),
+      };
+
+    case "delete_leadership_bullet":
+      return {
+        ...state,
+        leadership: deleteBulletFromEntry(
+          state.leadership,
+          action.entryIndex,
+          action.bulletIndex,
+        ),
+      };
 
     default:
       return state;
   }
-};
+}

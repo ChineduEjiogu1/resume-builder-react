@@ -1,5 +1,7 @@
-import type { BulletedEntry } from "../../types/resume";
-import type { BulletedEntryFieldName } from "./BulletedEntryEditor";
+import type {
+  BulletedEntry,
+  BulletedEntryFieldName,
+} from "../../types/resume";
 import { BulletedEntryEditor } from "./BulletedEntryEditor";
 
 type BulletedSectionFormProps = {
